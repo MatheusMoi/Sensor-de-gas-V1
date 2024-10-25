@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #121212; /* Fundo escuro */
+            color: #ffffff; /* Texto branco */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+        }
+
+        #login-form {
+            background-color: #1e1e1e; /* Fundo do formulário */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 300px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #333; /* Fundo dos inputs */
+            color: #ffffff; /* Texto branco nos inputs */
+            transition: background-color 0.3s;
+        }
+
+        .form-input:focus {
+            background-color: #444; /* Efeito de foco */
+            outline: none;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea; /* Cor do botão */
+            color: #ffffff; /* Texto branco no botão */
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .form-button:hover {
+            background-color: #3700b3; /* Efeito hover */
+            transform: scale(1.05); /* Aumenta levemente o botão ao passar o mouse */
+        }
+
+        .form-button:active {
+            transform: scale(0.95); /* Efeito ao clicar no botão */
+        }
+    </style>
+</head>
+<body>
+   
+    <form id="login-form" onsubmit="return handleLogin(event)">
+        <label class="form-label" for="nome">Nome:</label>
+        <input class="form-input" type="text" id="nome" name="nome" required>
+        <br>
+        <label class="form-label" for="senha">Senha:</label>
+        <input class="form-input" type="password" id="senha" name="senha" required>
+        <br>
+        <button class="form-button" type="submit">Entrar</button>
+    </form>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); // Impede o envio do formulário
+
+            const nome = document.getElementById('nome').value;
+            const senha = document.getElementById('senha').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nome, senha })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/acesso-restrito/acesso-restrito.html'; // Redireciona se o login for bem-sucedido
+                } else {
+                    alert(data.message); // Exibe mensagem de erro
+                }
+            })
+            .catch(error => console.error('Erro ao fazer login:', error));
+        }
+    </script>
+</body>
+</html>

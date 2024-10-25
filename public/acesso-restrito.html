@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso Restrito</title>
+    <style>
+        body {
+            background-color: #121212; /* Fundo escuro */
+            color: #ffffff; /* Texto branco */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #1e1e1e; /* Fundo do container */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #6200ea; /* Cor do botão padrão */
+            color: #ffffff; /* Texto branco no botão */
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #3700b3; /* Efeito hover */
+            transform: scale(1.05); /* Aumenta levemente o botão ao passar o mouse */
+        }
+
+        button:active {
+            transform: scale(0.95); /* Efeito ao clicar no botão */
+        }
+
+        main {
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bem-vindo, <span id="username"></span>!</h1>
+            <form id="logout-form" action="/logout" method="POST">
+                <button type="submit">Sair</button>
+            </form>
+        </header>
+        
+        <main>
+            <h2>Informações</h2>
+            <p>ID: <span id="info-id"></span></p>
+            <p>Internet: <span id="info-internet"></span></p>
+            <p>Gás: <span id="info-gas"></span></p>
+        </main>
+    </div>
+
+    <script>
+        let username = '';
+
+        // Função para atualizar as informações na tela
+        function atualizarInformacoes() {
+            fetch('/api/leitura')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && Object.keys(data.data).length > 0) {
+                        if (data.data.id === username) {
+                            document.getElementById('info-id').textContent = data.data.id;
+                            document.getElementById('info-internet').textContent = data.data.internet;
+                            document.getElementById('info-gas').textContent = data.data.gas;
+                        }
+                    }
+                })
+                .catch(error => console.error('Erro ao obter as informações:', error));
+        }
+
+        // Obtém o nome do usuário
+        fetch('/get-username')
+            .then(response => response.json())
+            .then(data => {
+                username = data.username || 'Usuário desconhecido';
+                document.getElementById('username').textContent = username;
+                atualizarInformacoes(); // Atualiza as informações logo ao entrar
+            })
+            .catch(error => console.error('Erro ao obter o nome do usuário:', error));
+
+        // Intervalo para verificar novas informações a cada 5 segundos
+        setInterval(atualizarInformacoes, 5000);
+    </script>
+</body>
+</html>

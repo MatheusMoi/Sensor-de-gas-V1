@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #cfcfcf;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.logout-form {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.logout-form button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logout-form button:hover {
+    background-color: darkred;
+}
+
+/* Estilo para dispositivos móveis */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5em; /* Ajuste do tamanho da fonte */
+    }
+    .logout-form button {
+        padding: 8px 12px; /* Ajuste do padding */
+    }
+}

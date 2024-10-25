@@ -1,0 +1,61 @@
+body {
+    background-color: #121212; /* Fundo escuro */
+    color: #ffffff; /* Texto branco */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    background-color: #1e1e1e; /* Fundo do container */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+h2 {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #6200ea; /* Cor do botão padrão */
+    color: #ffffff; /* Texto branco no botão */
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #3700b3; /* Efeito hover */
+    transform: scale(1.05); /* Aumenta levemente o botão ao passar o mouse */
+}
+
+button:active {
+    transform: scale(0.95); /* Efeito ao clicar no botão */
+}
+
+main {
+    margin-top: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
